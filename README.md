@@ -117,6 +117,14 @@ docker compose up --build host
 
 The API refuses to boot while a module has pending migrations (see [Database changes](#database-changes)), which is why step 3 comes first.
 
+Prefer one command? The .NET Aspire AppHost in `src/Host/AppHost` runs all four steps: it starts the backing services, applies every module's migrations in order, then starts the API, with the Aspire dashboard on http://localhost:18888. It needs only the .NET 10 SDK and Docker:
+
+```bash
+dotnet run --project src/Host/AppHost
+```
+
+Details are in [`docs/getting-started.md`](docs/getting-started.md#run-everything-with-net-aspire-instead).
+
 | What | Where |
 | :-- | :-- |
 | Swagger UI (Development only) | http://localhost:5001/swagger |

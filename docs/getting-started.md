@@ -34,6 +34,31 @@ What each step does:
 3. The application never migrates the database itself (see [Database changes](../README.md#database-changes)). `make ef-update-all` is the local-development shortcut: it creates `modular-monolith-db` if missing and applies the Outbox, Notifications, Products and Inventory migrations. IAM has no database. The Hangfire storage schema is created by Hangfire when the API starts.
 4. The `host` service builds `src/Host/Host/Dockerfile` and listens on `http://localhost:5001`. If you skip step 3 the container exits at startup with a message naming the module and the pending migrations.
 
+### Run everything with .NET Aspire instead
+
+`src/Host/AppHost` is a .NET Aspire AppHost that performs the four steps above in one command. It needs only the .NET 10 SDK and a running Docker: no Docker network, no Make, no global `dotnet-ef` (it comes from the local tool manifest `.config/dotnet-tools.json`).
+
+```bash
+dotnet run --project src/Host/AppHost
+```
+
+Or set `AppHost` as the startup project in Visual Studio or Rider. The AppHost then:
+
+1. Starts PostgreSQL, RabbitMQ (with the management plugin) and Keycloak (realm imported from `keycloak/`), with the same ports and credentials as `docker-compose.yml`. Their data lives in Docker volumes; to import an edited realm again, delete the Keycloak data volume.
+2. Runs `dotnet tool restore`, then `dotnet ef database update` for Outbox, Notifications, Products and Inventory, one after another, like `make ef-update-all`. Each step is a resource in the dashboard with its own console log.
+3. Starts the API on `http://localhost:5001` once every migration has finished, and points its OpenTelemetry export at the Aspire dashboard.
+
+The Aspire dashboard opens on `http://localhost:18888` and replaces the `mm.aspire-dashboard` container. The links in the table below stay the same. The API's traces and metrics appear under the telemetry source `modular-monolith-<machine name>`, because the API sets its own service name and instance id. Stop the Docker Compose stack first: both use the same host ports.
+
+The AppHost uses Aspire 17. Its dashboard and orchestrator come from the Aspire CLI bundle, which the build finds on its own: an installed `aspire` CLI, otherwise it fetches one through `dnx` the first time.
+
+Settings in `src/Host/AppHost/appsettings.json` (or `dotnet run --project src/Host/AppHost -- --AppHost:Name=value`):
+
+| Setting | Default | Effect |
+| :-- | :-- | :-- |
+| `AppHost:UseRedis` | `false` | `true` also starts Redis and switches the cache and the SignalR backplane to it. Off by default, as in `docker-compose.yml`. |
+| `AppHost:KeycloakImageTag` | `26.7` | The Keycloak image tag. `latest` (26.8.x when this was written) answers 401 to the `backend-api` service account on the Admin REST API, so seeding, user lookups and the store owner role grant fail. Keycloak cannot be downgraded: after going back to an older tag, delete the Keycloak data volume. |
+
 ### Run the API from the command line instead
 
 With the infrastructure from step 2 running and the migrations applied, you can run the API without Docker:

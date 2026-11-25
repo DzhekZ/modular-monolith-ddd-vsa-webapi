@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Local development orchestrator (Aspire 17). It replaces the manual "Quick start" steps of the README:
+    backing services (PostgreSQL, RabbitMQ, Keycloak, optional Redis), the database migrations
+    (dotnet ef database update per module, in the Makefile's order) and the API itself.
+    Never deployed: production keeps applying the reviewed SQL scripts (README, Database changes).
+    The dashboard and DCP come from the Aspire CLI bundle, which the build resolves on its own
+    (an installed `aspire` CLI, otherwise `dnx Aspire.Cli`).
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <UserSecretsId>83c8eb58-8620-45a2-95fe-99a17dc724ee</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost"/>
+    <PackageReference Include="Aspire.Hosting.Dotnet"/>
+    <PackageReference Include="Aspire.Hosting.Keycloak"/>
+    <PackageReference Include="Aspire.Hosting.PostgreSQL"/>
+    <PackageReference Include="Aspire.Hosting.RabbitMQ"/>
+    <PackageReference Include="Aspire.Hosting.Redis"/>
+  </ItemGroup>
+
+  <!--
+    Not a resource (the API is added with AddDotnetProject): this reference only makes the AppHost build compile
+    src/Host/Host first, so the `dotnet ef database update` steps, which run with no-build, find its output.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\Host\Host.csproj" ReferenceOutputAssembly="false" IsAspireProjectResource="false"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="SonarAnalyzer.CSharp">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

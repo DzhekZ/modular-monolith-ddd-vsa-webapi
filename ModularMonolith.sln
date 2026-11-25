@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.12.12412.261 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{123C371A-07C7-4CB8-BB17-3354463B075D}"
 EndProject
@@ -10,21 +10,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E6709333-F3E8-45BD-9052-1BEECF0D3904}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		.gitignore = .gitignore
 		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		CLAUDE.md = CLAUDE.md
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
-		README.md = README.md
 		docker-compose.app.yml = docker-compose.app.yml
+		docker-compose.dcproj = docker-compose.dcproj
 		docker-compose.perf.yml = docker-compose.perf.yml
 		docker-compose.yml = docker-compose.yml
-		Makefile = Makefile
-		CLAUDE.md = CLAUDE.md
-		renovate.json = renovate.json
-		ModularMonolith.sln = ModularMonolith.sln
-		docker-compose.dcproj = docker-compose.dcproj
 		GlobalUsings.cs = GlobalUsings.cs
 		LICENSE = LICENSE
+		Makefile = Makefile
+		ModularMonolith.sln = ModularMonolith.sln
+		README.md = README.md
+		renovate.json = renovate.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{48702C3D-CFDB-4855-8EB0-92B8E19F06D8}"
@@ -97,8 +97,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IAM", "IAM", "{91F817EF-C90
 		migrations\IAM\20260403130605_IAM.sql = migrations\IAM\20260403130605_IAM.sql
 		migrations\IAM\20260405213226_IAM.sql = migrations\IAM\20260405213226_IAM.sql
 		migrations\IAM\20260407162947_IAM.sql = migrations\IAM\20260407162947_IAM.sql
-		migrations\IAM\MergeNameAndLastNameIntoFullName.sql = migrations\IAM\MergeNameAndLastNameIntoFullName.sql
 		migrations\IAM\AddPhoneNumberIndex.sql = migrations\IAM\AddPhoneNumberIndex.sql
+		migrations\IAM\MergeNameAndLastNameIntoFullName.sql = migrations\IAM\MergeNameAndLastNameIntoFullName.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{F2B57A19-3FBC-4641-B255-6BFD29A1CBB9}"
@@ -110,11 +110,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{F2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Outbox", "Outbox", "{AE459098-BD20-4CC1-9AB6-261D835FACED}"
 	ProjectSection(SolutionItems) = preProject
-		migrations\Outbox\Initial.sql = migrations\Outbox\Initial.sql
+		migrations\Outbox\AddNextRetryAtToOutboxMessages.sql = migrations\Outbox\AddNextRetryAtToOutboxMessages.sql
 		migrations\Outbox\AddTraceContext.sql = migrations\Outbox\AddTraceContext.sql
+		migrations\Outbox\Initial.sql = migrations\Outbox\Initial.sql
 		migrations\Outbox\RemoveXminConcurrencyToken.sql = migrations\Outbox\RemoveXminConcurrencyToken.sql
 		migrations\Outbox\ReplaceKafkaWithPollingOutbox.sql = migrations\Outbox\ReplaceKafkaWithPollingOutbox.sql
-		migrations\Outbox\AddNextRetryAtToOutboxMessages.sql = migrations\Outbox\AddNextRetryAtToOutboxMessages.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundJobs", "src\Modules\BackgroundJobs\BackgroundJobs\BackgroundJobs.csproj", "{F59BE51C-A34D-49BF-BCE1-2D98D59ACADA}"
@@ -159,6 +159,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Endpoints", "src\Modules\Inventory\Inventory.Endpoints\Inventory.Endpoints.csproj", "{8730AB92-E490-4544-A5C7-146B6BCC65C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Tests", "src\Modules\Inventory\Inventory.Tests\Inventory.Tests.csproj", "{81A7E26B-9F26-4661-9E36-6A26F4D52F4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "src\Host\AppHost\AppHost.csproj", "{06F91A40-03AE-4DAD-8304-38B646E0E8EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -562,6 +564,18 @@ Global
 		{81A7E26B-9F26-4661-9E36-6A26F4D52F4F}.Release|x64.Build.0 = Release|Any CPU
 		{81A7E26B-9F26-4661-9E36-6A26F4D52F4F}.Release|x86.ActiveCfg = Release|Any CPU
 		{81A7E26B-9F26-4661-9E36-6A26F4D52F4F}.Release|x86.Build.0 = Release|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Debug|x64.Build.0 = Debug|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Release|x64.ActiveCfg = Release|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Release|x64.Build.0 = Release|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -615,6 +629,7 @@ Global
 		{F14B1D8A-2A04-4A89-B079-3F84C6DB4546} = {F5875B43-19ED-2065-58CC-C5DCA1A23555}
 		{8730AB92-E490-4544-A5C7-146B6BCC65C8} = {F5875B43-19ED-2065-58CC-C5DCA1A23555}
 		{81A7E26B-9F26-4661-9E36-6A26F4D52F4F} = {F5875B43-19ED-2065-58CC-C5DCA1A23555}
+		{06F91A40-03AE-4DAD-8304-38B646E0E8EB} = {A079F5A6-9723-4209-89B5-12760DF81F99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63C0CEE2-E69F-4EFC-AF54-926D251EB97C}

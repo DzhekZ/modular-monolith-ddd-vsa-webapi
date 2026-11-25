@@ -4,6 +4,13 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
+    <!-- .NET Aspire AppHost (src/Host/AppHost), local development only. -->
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="17.0.0" />
+    <PackageVersion Include="Aspire.Hosting.Dotnet" Version="17.0.0" />
+    <PackageVersion Include="Aspire.Hosting.Keycloak" Version="17.0.0-preview.1.26567.5" />
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="17.0.0" />
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="17.0.0" />
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="17.0.0" />
     <PackageVersion Include="Aigamo.ResXGenerator" Version="4.4.0" />
     <!-- Transitive pin: MessagePack <2.5.192 has GHSA-hv8m-jj95-wg3x (high). Pulled via SignalR.StackExchangeRedis. -->
     <PackageVersion Include="MessagePack" Version="3.1.12" />
